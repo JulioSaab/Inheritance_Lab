@@ -3,11 +3,6 @@
  * Author: Julio Saab
  * Date: 2025-10-13
  * Purpose: Implements the SavingsAccount class functions.
- * Assignment: Inheritance Lab
- *
- * Logic:
- * - calculateInterest() computes interest based on current balance and interest rate.
- * - display() prints account info along with interest rate.
  ***********************************************************************/
 
 #include "SavingsAccount.h"
@@ -19,6 +14,7 @@ SavingsAccount::SavingsAccount(const std::string& accNum, const std::string& acc
 void SavingsAccount::calculateInterest() {
     double interest = balance * interestRate;
     balance += interest;
+    recordTransaction("Interest Added", interest);
     std::cout << "Interest of $" << interest << " added.\n";
 }
 

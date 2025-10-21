@@ -1,15 +1,9 @@
 /***********************************************************************
  * File: main.cpp
  * Author: Julio Saab
- * Date: 2025-10-13
- * Purpose: Demonstrates polymorphism and inheritance using BankAccount,
- *          CheckingAccount, and SavingsAccount classes.
- * Assignment: Inheritance Lab
- *
- * Logic:
- * - Stores accounts in a vector of unique_ptr<BankAccount>.
- * - Demonstrates polymorphic deposit and withdraw methods.
- * - Demonstrates SavingsAccount-specific calculateInterest() method.
+ * Date: 2025-10-20
+ * Purpose: Demonstrates inheritance, polymorphism, and composition.
+ * Assignment: Inheritance + Composition Lab
  ***********************************************************************/
 
 #include <iostream>
@@ -29,16 +23,23 @@ int main() {
     // Demonstrate polymorphism
     for (auto& acc : accounts) {
         acc->display();
-        acc->deposit(500);   // Deposit $500
-        acc->withdraw(200);  // Withdraw $200
+        acc->deposit(500);   // Deposit
+        acc->withdraw(200);  // Withdraw
         std::cout << "\n";
     }
 
-    // Call calculateInterest only for SavingsAccount
+    // Calculate interest for savings
     SavingsAccount* savings = dynamic_cast<SavingsAccount*>(accounts[1].get());
     if (savings) {
         savings->calculateInterest();
         savings->display();
+    }
+
+    // Print transaction histories
+    std::cout << "\n=== TRANSACTION HISTORIES ===\n";
+    for (const auto& acc : accounts) {
+        acc->printHistory();
+        std::cout << "\n";
     }
 
     return 0;

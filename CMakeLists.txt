@@ -9,4 +9,6 @@ add_executable(Bank main.cpp
         CheckingAccount.cpp
         CheckingAccount.h
         SavingsAccount.cpp
-        SavingsAccount.h)
+        SavingsAccount.h
+        Transaction.cpp
+        Transaction.h)

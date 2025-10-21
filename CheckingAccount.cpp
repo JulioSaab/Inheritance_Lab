@@ -3,11 +3,6 @@
  * Author: Julio Saab
  * Date: 2025-10-13
  * Purpose: Implements the CheckingAccount class functions.
- * Assignment: Inheritance Lab
- *
- * Logic:
- * - withdraw() deducts amount + transaction fee from balance.
- * - display() prints account info along with the transaction fee.
  ***********************************************************************/
 
 #include "CheckingAccount.h"
@@ -17,13 +12,12 @@ CheckingAccount::CheckingAccount(const std::string& accNum, const std::string& a
         : BankAccount(accNum, accHolder, bal), transactionFee(fee) {}
 
 void CheckingAccount::withdraw(double amount) {
-    double totalAmount = amount + transactionFee;
-    if (totalAmount <= balance) {
-        balance -= totalAmount;
-        std::cout << "Withdrawal of $" << amount << " plus transaction fee of $"
-                  << transactionFee << " successful.\n";
+    double total = amount + transactionFee;
+    if (total > 0 && total <= balance) {
+        balance -= total;
+        recordTransaction("Withdraw (incl. fee)", total);
     } else {
-        std::cout << "Insufficient funds including transaction fee.\n";
+        std::cout << "Insufficient funds for withdrawal + fee.\n";
     }
 }
 

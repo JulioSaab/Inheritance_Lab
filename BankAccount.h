@@ -1,17 +1,15 @@
 /***********************************************************************
  * File: BankAccount.h
  * Author: Julio Saab
- * Date: 2025-10-13
+ * Date: 2025-10-20
  * Purpose: Defines the base BankAccount class for a banking system.
- *          Includes member variables and virtual methods for deposits,
- *          withdrawals, and account information display.
- * Assignment: Inheritance Lab
+ *          Includes member variables, virtual methods, and composition.
+ * Assignment: Inheritance + Composition Lab
  *
  * Logic:
  * - Encapsulates account data (number, holder name, balance).
- * - Provides getters and setters for member variables.
- * - Uses virtual methods to allow polymorphic behavior for derived classes.
- * - Virtual destructor ensures proper cleanup when derived objects are deleted.
+ * - Provides polymorphic deposit/withdraw/display.
+ * - Maintains a transaction history using composition.
  ***********************************************************************/
 
 #ifndef BANKACCOUNT_H
@@ -19,6 +17,8 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
+#include "Transaction.h"
 
 class BankAccount {
 protected:
@@ -26,11 +26,13 @@ protected:
     std::string accountHolderName;
     double balance;
 
-public:
-    BankAccount(); // Default constructor
-    BankAccount(const std::string& accNum, const std::string& accHolder, double bal); // Parameterized constructor
+    // Composition: BankAccount "has-a" vector of Transactions
+    std::vector<Transaction> transactionHistory;
 
-    virtual ~BankAccount(); // Virtual destructor
+public:
+    BankAccount();
+    BankAccount(const std::string& accNum, const std::string& accHolder, double bal);
+    virtual ~BankAccount();
 
     // Accessors
     std::string getAccountNumber() const;
@@ -42,11 +44,16 @@ public:
     void setAccountHolderName(const std::string& accHolder);
     void setBalance(double bal);
 
-    // Virtual functions for polymorphism
+    // Virtual methods
     virtual void deposit(double amount);
     virtual void withdraw(double amount);
+    virtual void display() const;
 
-    virtual void display() const; // Display account info
+    // Composition methods
+    void printHistory() const;
+
+protected:
+    void recordTransaction(const std::string& type, double amount);
 };
 
 #endif
